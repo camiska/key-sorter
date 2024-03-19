@@ -10,15 +10,6 @@ function sortData() {
         'noKey': []
     };
 
-    // Mapping of key types to new box IDs
-    const keyToBoxId = {
-        ':chaoskey:': 'boxChaos',
-        ':goldkey:': 'boxGold',
-        ':silverkey:': 'boxSilver',
-        ':bronzekey:': 'boxBronze',
-        'noKey': 'boxNone'
-    };
-
     lines.forEach(line => {
         const parts = line.split('·');
         if (parts.length > 1) {
@@ -41,7 +32,7 @@ function sortData() {
 
     Object.keys(sortedData).forEach(key => {
         sortedData[key].sort((a, b) => b.ka - a.ka);
-        const boxId = keyToBoxId[key]; // Use the new mapping to get the correct box ID
+        const boxId = `box${key.replace(/:/g, '').charAt(0).toUpperCase() + key.slice(1).replace(/:/g, '')}`; // e.g., boxChaos
         const box = document.getElementById(boxId);
         if (box !== null) {
             box.innerHTML = '';
@@ -53,5 +44,47 @@ function sortData() {
         } else {
             console.error('Element not found:', boxId);
         }
+    });
+}
+
+function displayTop(category) {
+    const inputId = `input${category}`;
+    const number = document.getElementById(inputId).value;
+    const boxId = `box${category}`;
+    const topBoxId = `top${category}`;
+
+    const entries = document.getElementById(boxId).getElementsByTagName('p');
+    const topBox = document.getElementById(topBoxId);
+    topBox.innerHTML = '';
+
+    for (let i = 0; i < Math.min(entries.length, number); i++) {
+        const p = document.createElement('p');
+        p.textContent = entries[i].textContent;
+        topBox.appendChild(p);
+    }
+}
+
+function displayOverallTop() {
+    const number = document.getElementById('inputOverall').value;
+    const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
+    const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
+    const allEntries = [];
+
+    selectedCategories.forEach(cat => {
+        const boxId = `box${cat}`;
+        const entries = document.getElementById(boxId).getElementsByTagName('p');
+        for (let i = 0; i < entries.length; i++) {
+            allEntries.push({
+                text: entries[i].textContent,
+                ka: parseInt(entries[i].textContent.match(/(\d+) ka$/)[1]),
+                html: entries[i].outerHTML
+            });
+        }
+    });
+
+    const topOverall = document.getElementById('topOverall');
+    topOverall.innerHTML = '';
+    allEntries.sort((a, b) => b.ka - a.ka).slice(0, number).forEach(entry => {
+        topOverall.innerHTML += entry.html;
     });
 }
