@@ -1,5 +1,5 @@
-// Initialize sortedData as an empty object
-let sortedData = {};
+// Initialize sortedData as an empty object if it's not already declared
+let sortedData = sortedData || {};
 
 function sortData() {
     const rawData = document.getElementById('dataInput').value;
