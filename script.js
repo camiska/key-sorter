@@ -67,35 +67,30 @@ function displayOverallTop() {
         return;
     }
 
-    const numberOverall = document.getElementById('inputOverall').value;
+    const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
-    const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
-    const categoryValues = {
-        'Chaos': parseInt(document.getElementById('inputChaos').value),
-        'Gold': parseInt(document.getElementById('inputGold').value),
-        'Silver': parseInt(document.getElementById('inputSilver').value),
-        'Bronze': parseInt(document.getElementById('inputBronze').value)
-    };
-
+    const selectedCategories = categories.filter(cat => {
+        if (cat === 'None') {
+            return document.getElementById(`check${cat}`).checked;
+        } else {
+            return document.getElementById(`check${cat}`).checked && document.getElementById(`input${cat}`).value.trim() !== '';
+        }
+    });
     const allEntries = [];
 
     selectedCategories.forEach(cat => {
-        const num = categoryValues[cat];
-        if (isNaN(num) || num <= 0) {
-            // If no value specified or invalid value, consider all entries for this category
-            const key = `:${cat.toLowerCase()}key:`; 
-            const entries = sortedData[key] || [];
-            entries.forEach(entry => {
+        if (cat === 'None') {
+            sortedData['noKey'].slice(0, number).forEach(entry => {
                 allEntries.push({
                     text: entry.full,
                     ka: entry.ka
                 });
             });
         } else {
-            // If a value is specified, select the top entries for this category
-            const key = `:${cat.toLowerCase()}key:`; 
+            const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
             const entries = sortedData[key] || [];
-            entries.slice(0, num).forEach(entry => {
+            const numToDisplay = cat === 'None' ? number : document.getElementById(`input${cat}`).value;
+            entries.slice(0, numToDisplay).forEach(entry => {
                 allEntries.push({
                     text: entry.full,
                     ka: entry.ka
@@ -106,10 +101,10 @@ function displayOverallTop() {
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    const topBox = document.getElementById('topOverallResults'); 
-    topBox.innerHTML = ''; 
+    const topBox = document.getElementById('topOverallResults'); // Ensure this matches your HTML
+    topBox.innerHTML = ''; // Clear previous content
     const list = document.createElement('ul');
-    allEntries.slice(0, numberOverall).forEach(entry => {
+    allEntries.forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry.text;
         list.appendChild(listItem);
@@ -117,6 +112,7 @@ function displayOverallTop() {
     topBox.appendChild(list);
     topBox.style.display = 'block'; // Make the results box visible
 }
+
 
 // Function to copy the content of the top overall results to the clipboard
 function copyTopResults() {
