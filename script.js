@@ -67,11 +67,22 @@ function displayOverallTop() {
         return;
     }
 
-    const number = document.getElementById('inputOverall').value;
+    const overallNumber = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
     const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
-    const allEntries = [];
 
+    const categoryNumbers = {};
+    selectedCategories.forEach(cat => {
+        const inputElement = document.getElementById(`input${cat}`);
+        const inputValue = inputElement ? inputElement.value : '';
+        categoryNumbers[cat] = parseInt(inputValue) || 0;
+    });
+
+    const allEntries = [];
+    const selectedEntries = [];
+    let remainingOverallNumber = overallNumber;
+
+    // Gather entries for each category
     selectedCategories.forEach(cat => {
         if (cat === 'None') {
             sortedData['noKey'].forEach(entry => {
@@ -83,28 +94,43 @@ function displayOverallTop() {
         } else {
             const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
             const entries = sortedData[key] || [];
-            entries.slice(0, number).forEach(entry => {
-                allEntries.push({
-                    text: entry.full,
-                    ka: entry.ka
-                });
-            });
+
+            // Sort entries in descending order of ka value
+            entries.sort((a, b) => b.ka - a.ka);
+
+            // Determine the number of entries to select for this category
+            const categoryNumber = categoryNumbers[cat];
+            const selectedCategoryEntries = categoryNumber > 0 ? entries.slice(0, categoryNumber) : entries;
+
+            // Add selected category entries to the overall selected entries
+            selectedEntries.push(...selectedCategoryEntries);
+            remainingOverallNumber -= selectedCategoryEntries.length;
         }
     });
 
-    allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
+    // Sort all selected entries by ka value
+    selectedEntries.sort((a, b) => b.ka - a.ka);
 
-    const topBox = document.getElementById('topOverallResults'); // Ensure this matches your HTML
-    topBox.innerHTML = ''; // Clear previous content
+    // Add remaining top entries from other categories if any
+    for (let i = 0; i < allEntries.length && remainingOverallNumber > 0; i++) {
+        if (!selectedEntries.includes(allEntries[i])) {
+            selectedEntries.push(allEntries[i]);
+            remainingOverallNumber--;
+        }
+    }
+
+    const topBox = document.getElementById('topOverallResults');
+    topBox.innerHTML = '';
     const list = document.createElement('ul');
-    allEntries.slice(0, number).forEach(entry => {
+    selectedEntries.slice(0, overallNumber).forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry.text;
         list.appendChild(listItem);
     });
     topBox.appendChild(list);
-    topBox.style.display = 'block'; // Make the results box visible
+    topBox.style.display = 'block';
 }
+
 // Function to copy the content of the top overall results to the clipboard
 function copyTopResults() {
     const topResults = document.getElementById('topOverallResults');
