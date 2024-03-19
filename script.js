@@ -1,10 +1,8 @@
 function sortData() {
-    console.log("Function called"); // Check if function is called
-    const rawData = document.getElementById('dataInput').value;
-    console.log(rawData); // Check if data is being read correctly
-    const rawData = document.getElementById('dataInput').value;
-    // Split the raw data into lines
-    const lines = rawData.split('\n');
+    console.log("Function called"); // This line helps to check if the function is called when the button is clicked
+    const rawData = document.getElementById('dataInput').value; // This gets the raw data from the textarea
+    console.log(rawData); // This line helps to check what raw data was captured
+    const lines = rawData.split('\n'); // This splits the raw data into lines
 
     // Initialize the data structure to hold sorted entries for each key type
     const sortedData = {
@@ -17,23 +15,23 @@ function sortData() {
 
     // Iterate over each line of data
     lines.forEach(line => {
-        // Split the line into parts
         const parts = line.split('·');
-        const name = parts[0].trim();
-        // Check if the line contains a key
-        if (parts.length > 1) {
+        if (parts.length > 1) { // Check if the line contains a key
+            const name = parts[0].trim();
             const details = parts[1].trim().split(' ');
             const keyType = details[0]; // The key type, e.g., ":chaoskey:"
-            const kaValue = parseInt(details[2]); // The 'ka' value for sorting
+            const kaValue = parseInt(details[details.length - 2]); // The 'ka' value for sorting
 
-            // Add the entry to the corresponding key type array
             if (sortedData.hasOwnProperty(keyType)) {
-                sortedData[keyType].push({ name, ka: kaValue, full: line });
+                sortedData[keyType].push({ name, ka: kaValue, full: line.trim() });
             }
         } else {
-            // If there is no key, it goes into the 'noKey' category
-            const kaValue = parseInt(name.split(' ')[name.split(' ').length - 2]); // Get the 'ka' value for sorting
-            sortedData['noKey'].push({ name: name, ka: kaValue, full: line });
+            // Handle entries with no keys
+            const parts = line.trim().split(' ');
+            const kaValue = parseInt(parts[parts.length - 2]); // The 'ka' value for sorting, assuming 'ka' is always at the second last position
+            if (!isNaN(kaValue)) { // Check if kaValue is a number
+                sortedData['noKey'].push({ name: line.trim(), ka: kaValue, full: line.trim() });
+            }
         }
     });
 
