@@ -92,6 +92,15 @@ function displayOverallTop() {
                     ka: entry.ka
                 });
             });
+            // Include entries from the "No Key" category if selected
+            if (cat === 'None') {
+                sortedData['noKey'].forEach(entry => {
+                    allEntries.push({
+                        text: entry.full,
+                        ka: entry.ka
+                    });
+                });
+            }
         } else {
             // If a value is specified, select the top entries for this category
             const key = `:${cat.toLowerCase()}key:`; 
