@@ -125,19 +125,18 @@ function copyTopResults() {
     // Create a textarea element
     const textarea = document.createElement('textarea');
     textarea.value = topResultsText;
-    let results = textarea.value.toString();
 
     // Append the textarea to the document body
-    document.body.appendChild(results);
+    document.body.appendChild(textarea);
 
     // Select the textarea content
-    results.select();
+    textarea.select();
 
     // Copy text to clipboard
     document.execCommand('copy');
 
     // Remove the textarea from the document body
-    document.body.removeChild(results);
+    document.body.removeChild(textarea);
 
     // Success message
     alert('Top results copied to clipboard!');
