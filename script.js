@@ -115,31 +115,26 @@ function copyTopResults() {
     for (let i = 0; i < entries.length; i++) {
         // Append the text content of the list item
         topResultsText += entries[i].textContent;
-
+        
+        // Add a space after each list item
+        topResultsText += ' ';
+        
         // Add a newline character after each list item except for the last one
         if (i < entries.length - 1) {
             topResultsText += '\n';
         }
     }
 
-    // Create a textarea element
-    const textarea = document.createElement('textarea');
-    textarea.value = topResultsText;
-
-    // Append the textarea to the document body
-    document.body.appendChild(textarea);
-
-    // Select the textarea content
-    textarea.select();
-
     // Copy text to clipboard
-    document.execCommand('copy');
-
-    // Remove the textarea from the document body
-    document.body.removeChild(textarea);
-
-    // Success message
-    alert('Top results copied to clipboard!');
+    navigator.clipboard.writeText(topResultsText)
+        .then(() => {
+            // Success message
+            alert('Top results copied to clipboard!');
+        })
+        .catch(err => {
+            // Error message
+            console.error('Could not copy text: ', err);
+        });
 
     // Open pop-up window with the link
     window.open('https://mudae-tools.gustavbylund.se/split-list/', '_blank');
