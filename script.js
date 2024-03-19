@@ -111,9 +111,18 @@ function copyTopResults() {
     const entries = topResults.getElementsByTagName('li');
     let topResultsText = '';
 
-    // Iterate over each list item and append its text content with a space character
+    // Iterate over each list item and construct the text content with proper formatting
     for (let i = 0; i < entries.length; i++) {
-        topResultsText += entries[i].textContent + ' '; // Add a space after each list item
+        // Append the text content of the list item
+        topResultsText += entries[i].textContent;
+        
+        // Add a space after each list item
+        topResultsText += ' ';
+        
+        // Add a newline character after each list item except for the last one
+        if (i < entries.length - 1) {
+            topResultsText += '\n';
+        }
     }
 
     // Copy text to clipboard
