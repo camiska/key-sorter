@@ -85,11 +85,8 @@ function displayOverallTop() {
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    const topBox = document.createElement('div'); // Create a new div for the top overall results
-    topBox.id = 'topOverallResults'; // Set the id of the new div
-    topBox.className = 'keyBox'; // Apply the class for styling
-    document.body.appendChild(topBox); // Append the new div to the body
-
+    const topBox = document.getElementById('topOverallResults'); // Ensure this matches your HTML
+    topBox.innerHTML = ''; // Clear previous content
     const list = document.createElement('ul');
     allEntries.slice(0, number).forEach(entry => {
         const listItem = document.createElement('li');
