@@ -1,23 +1,20 @@
+// Declare sortedData outside of the functions to give it global scope
+const sortedData = {
+    ':chaoskey:': [],
+    ':goldkey:': [],
+    ':silverkey:': [],
+    ':bronzekey:': [],
+    'noKey': []
+};
+
 function sortData() {
     const rawData = document.getElementById('dataInput').value;
     const lines = rawData.split('\n');
 
-    const sortedData = {
-        ':chaoskey:': [],
-        ':goldkey:': [],
-        ':silverkey:': [],
-        ':bronzekey:': [],
-        'noKey': []
-    };
-
-    // Mapping of key types to new box IDs
-    const keyToBoxId = {
-        ':chaoskey:': 'boxChaos',
-        ':goldkey:': 'boxGold',
-        ':silverkey:': 'boxSilver',
-        ':bronzekey:': 'boxBronze',
-        'noKey': 'boxNone'
-    };
+    // Reset sortedData each time sortData is called to clear old entries
+    Object.keys(sortedData).forEach(key => {
+        sortedData[key] = [];
+    });
 
     lines.forEach(line => {
         const parts = line.split('·');
@@ -41,7 +38,7 @@ function sortData() {
 
     Object.keys(sortedData).forEach(key => {
         sortedData[key].sort((a, b) => b.ka - a.ka);
-        const boxId = keyToBoxId[key]; // Use the new mapping to get the correct box ID
+        const boxId = `box${key.replace(':', '').charAt(0).toUpperCase() + key.slice(1).replace(':', '')}`; // Adjusted to correct box ID assignment
         const box = document.getElementById(boxId);
         if (box !== null) {
             box.innerHTML = '';
@@ -55,6 +52,7 @@ function sortData() {
         }
     });
 }
+
 function displayOverallTop() {
     const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
@@ -66,7 +64,7 @@ function displayOverallTop() {
         const entries = sortedData[key] || [];
         entries.slice(0, number).forEach(entry => {
             allEntries.push({
-                text: entry.full, // Assuming you want the full text displayed
+                text: entry.full,
                 ka: entry.ka
             });
         });
@@ -74,8 +72,7 @@ function displayOverallTop() {
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    // Prepare and display the content
-    const topBox = document.getElementById('topOverall');
+    const topBox = document.getElementById('topOverallResults'); // Ensure this matches your HTML
     topBox.innerHTML = ''; // Clear previous content
     const list = document.createElement('ul');
     allEntries.slice(0, number).forEach(entry => {
@@ -84,4 +81,5 @@ function displayOverallTop() {
         list.appendChild(listItem);
     });
     topBox.appendChild(list);
+    topBox.style.display = 'block'; // Make the results box visible
 }
