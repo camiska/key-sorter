@@ -1,5 +1,5 @@
 // Declare sortedData outside of any function to make it globally accessible
-const sortedData = {
+let sortedData = {
     ':chaoskey:': [],
     ':goldkey:': [],
     ':silverkey:': [],
@@ -8,7 +8,62 @@ const sortedData = {
 };
 
 function sortData() {
-    // Rest of the sortData function remains unchanged
+    const rawData = document.getElementById('dataInput').value;
+    const lines = rawData.split('\n');
+
+    // Reset sortedData before populating it with new data
+    sortedData = {
+        ':chaoskey:': [],
+        ':goldkey:': [],
+        ':silverkey:': [],
+        ':bronzekey:': [],
+        'noKey': []
+    };
+
+    // Mapping of key types to new box IDs
+    const keyToBoxId = {
+        ':chaoskey:': 'boxChaos',
+        ':goldkey:': 'boxGold',
+        ':silverkey:': 'boxSilver',
+        ':bronzekey:': 'boxBronze',
+        'noKey': 'boxNone'
+    };
+
+    lines.forEach(line => {
+        const parts = line.split('·');
+        if (parts.length > 1) {
+            const name = parts[0].trim();
+            const details = parts[1].trim().split(' ');
+            const keyType = details[0];
+            const kaValue = parseInt(details[details.length - 2]);
+
+            if (sortedData.hasOwnProperty(keyType)) {
+                sortedData[keyType].push({ name, ka: kaValue, full: line.trim() });
+            }
+        } else {
+            const nameParts = line.trim().split(' ');
+            const kaValue = parseInt(nameParts[nameParts.length - 2]);
+            if (!isNaN(kaValue)) {
+                sortedData['noKey'].push({ name: line.trim(), ka: kaValue, full: line.trim() });
+            }
+        }
+    });
+
+    Object.keys(sortedData).forEach(key => {
+        sortedData[key].sort((a, b) => b.ka - a.ka);
+        const boxId = keyToBoxId[key]; // Use the new mapping to get the correct box ID
+        const box = document.getElementById(boxId);
+        if (box !== null) {
+            box.innerHTML = '';
+            sortedData[key].forEach(item => {
+                const p = document.createElement('p');
+                p.textContent = item.full;
+                box.appendChild(p);
+            });
+        } else {
+            console.error('Element not found:', boxId);
+        }
+    });
 }
 
 function displayOverallTop() {
