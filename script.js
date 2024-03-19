@@ -2,17 +2,6 @@
 let sortedData = {};
 
 function sortData() {
-    // rest of the sortData function remains unchanged...
-}
-
-function displayOverallTop() {
-    // rest of the displayOverallTop function remains unchanged...
-}
-
-// Initialize sortedData as an empty object
-let sortedData = {};
-
-function sortData() {
     const rawData = document.getElementById('dataInput').value;
     const lines = rawData.split('\n');
 
@@ -96,14 +85,19 @@ function displayOverallTop() {
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    const topBox = document.getElementById('topOverallResults'); // Ensure this matches your HTML
-    topBox.innerHTML = ''; // Clear previous content
+    // Create a new box to display top results
+    const topOverallBox = document.createElement('div');
+    topOverallBox.className = 'keyBox';
+    topOverallBox.innerHTML = '<h2>Top Results</h2>';
+    
     const list = document.createElement('ul');
     allEntries.slice(0, number).forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry.text;
         list.appendChild(listItem);
     });
-    topBox.appendChild(list);
-    topBox.style.display = 'block'; // Make the results box visible
+    topOverallBox.appendChild(list);
+
+    // Append the new box to the document body
+    document.body.appendChild(topOverallBox);
 }
