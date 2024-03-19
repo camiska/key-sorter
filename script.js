@@ -105,10 +105,16 @@ function displayOverallTop() {
     topBox.appendChild(list);
     topBox.style.display = 'block'; // Make the results box visible
 }
-// Function to copy the content of the top overall results to the clipboard
+/ Function to copy the content of the top overall results to the clipboard
 function copyTopResults() {
     const topResults = document.getElementById('topOverallResults');
-    const topResultsText = topResults.innerText;
+    const listItems = topResults.getElementsByTagName('li');
+    let topResultsText = '';
+
+    // Concatenate list items with newline characters
+    for (let i = 0; i < listItems.length; i++) {
+        topResultsText += listItems[i].textContent + '\n';
+    }
 
     // Copy text to clipboard
     navigator.clipboard.writeText(topResultsText)
