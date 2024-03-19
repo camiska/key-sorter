@@ -1,15 +1,14 @@
 function sortData() {
-    console.log('sortData function has been called.'); // Confirm function is called
+    console.log('sortData function has been called.');
 
-    // Test the connection to each box individually
     const boxIds = ['chaoskeyBox', 'goldkeyBox', 'silverkeyBox', 'bronzekeyBox', 'noKeyBox'];
     boxIds.forEach(boxId => {
         const box = document.getElementById(boxId);
-        console.log(`${boxId}:`, box); // This should log the HTML element, not null
+        console.log(`${boxId}:`, box);
         if (box) {
-            box.innerHTML = `<p>Test content for ${boxId}</p>`; // Should apply if the element is correctly found
+            box.innerHTML = `<p>Test content for ${boxId}</p>`;
         } else {
-            console.error('Element not found:', boxId); // Helps identify which box is missing or misnamed
+            console.error('Element not found:', boxId);
         }
     });
 }
