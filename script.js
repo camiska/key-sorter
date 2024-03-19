@@ -111,9 +111,9 @@ function copyTopResults() {
     const entries = topResults.getElementsByTagName('li');
     let topResultsText = '';
 
-    // Iterate over each list item and append its text content with a newline character
+    // Iterate over each list item and append its text content with a space character
     for (let i = 0; i < entries.length; i++) {
-        topResultsText += entries[i].textContent + '\n';
+        topResultsText += entries[i].textContent + ' '; // Add a space after each list item
     }
 
     // Copy text to clipboard
