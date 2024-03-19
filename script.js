@@ -2,6 +2,17 @@
 let sortedData = {};
 
 function sortData() {
+    // rest of the sortData function remains unchanged...
+}
+
+function displayOverallTop() {
+    // rest of the displayOverallTop function remains unchanged...
+}
+
+// Initialize sortedData as an empty object
+let sortedData = {};
+
+function sortData() {
     const rawData = document.getElementById('dataInput').value;
     const lines = rawData.split('\n');
 
