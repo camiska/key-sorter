@@ -47,23 +47,6 @@ function sortData() {
     });
 }
 
-function displayTop(category) {
-    const inputId = `input${category}`;
-    const number = document.getElementById(inputId).value;
-    const boxId = `box${category}`;
-    const topBoxId = `top${category}`;
-
-    const entries = document.getElementById(boxId).getElementsByTagName('p');
-    const topBox = document.getElementById(topBoxId);
-    topBox.innerHTML = '';
-
-    for (let i = 0; i < Math.min(entries.length, number); i++) {
-        const p = document.createElement('p');
-        p.textContent = entries[i].textContent;
-        topBox.appendChild(p);
-    }
-}
-
 function displayOverallTop() {
     const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
