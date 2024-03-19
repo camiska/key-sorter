@@ -55,3 +55,33 @@ function sortData() {
         }
     });
 }
+function displayOverallTop() {
+    const number = document.getElementById('inputOverall').value;
+    const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
+    const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
+    const allEntries = [];
+
+    selectedCategories.forEach(cat => {
+        const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
+        const entries = sortedData[key] || [];
+        entries.slice(0, number).forEach(entry => {
+            allEntries.push({
+                text: entry.full, // Assuming you want the full text displayed
+                ka: entry.ka
+            });
+        });
+    });
+
+    allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
+
+    // Prepare and display the content
+    const topBox = document.getElementById('topOverall');
+    topBox.innerHTML = ''; // Clear previous content
+    const list = document.createElement('ul');
+    allEntries.slice(0, number).forEach(entry => {
+        const listItem = document.createElement('li');
+        listItem.textContent = entry.text;
+        list.appendChild(listItem);
+    });
+    topBox.appendChild(list);
+}
