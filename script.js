@@ -69,7 +69,13 @@ function displayOverallTop() {
 
     const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
-    const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
+    const selectedCategories = categories.filter(cat => {
+        if (cat === 'None') {
+            return document.getElementById(`check${cat}`).checked;
+        } else {
+            return document.getElementById(`check${cat}`).checked && cat !== 'None';
+        }
+    });
     const allEntries = [];
 
     selectedCategories.forEach(cat => {
@@ -96,3 +102,4 @@ function displayOverallTop() {
     topBox.appendChild(list);
     topBox.style.display = 'block'; // Make the results box visible
 }
+
