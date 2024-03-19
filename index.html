@@ -3,36 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Sorter</title>
-    <style>
-        body {
-            background-color: #333;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-        .keyBox {
-            border: 2px solid #888;
-            margin-top: 20px;
-            padding: 10px;
-        }
-        #dataInput {
-            width: 300px;
-            height: 150px;
-        }
-        button {
-            display: block;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Data Sorter</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <textarea id="dataInput" placeholder="Enter your data here..."></textarea>
     <button onclick="sortData()">Sort Key Level</button>
-    <div id="chaoskeyBox" class="keyBox"><h3>Chaos Key</h3></div>
-    <div id="goldkeyBox" class="keyBox"><h3>Gold Key</h3></div>
-    <div id="silverkeyBox" class="keyBox"><h3>Silver Key</h3></div>
-    <div id="bronzekeyBox" class="keyBox"><h3>Bronze Key</h3></div>
-    <div id="noKeyBox" class="keyBox"><h3>No Key</h3></div>
+    <div id="chaoskeyBox" class="keyBox"><h2>Chaos Key</h2></div>
+    <div id="goldkeyBox" class="keyBox"><h2>Gold Key</h2></div>
+    <div id="silverkeyBox" class="keyBox"><h2>Silver Key</h2></div>
+    <div id="bronzekeyBox" class="keyBox"><h2>Bronze Key</h2></div>
+    <div id="noKeyBox" class="keyBox"><h2>No Key</h2></div>
 
     <script src="script.js"></script>
 </body>
