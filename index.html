@@ -31,6 +31,20 @@
     <div id="boxBronze" class="keyBox"><h2>Bronze Key</h2></div>
     <div id="boxNone" class="keyBox"><h2>No Key</h2></div>
 
+<!-- Top Overall Tool -->
+<div id="overallTool" style="margin-top: 20px;">
+    <h2>Top Overall</h2>
+    <input type="number" id="inputOverall" placeholder="Enter number XY">
+    <div>
+        <label><input type="checkbox" id="checkChaos"> Chaos</label>
+        <label><input type="checkbox" id="checkGold"> Gold</label>
+        <label><input type="checkbox" id="checkSilver"> Silver</label>
+        <label><input type="checkbox" id="checkBronze"> Bronze</label>
+        <label><input type="checkbox" id="checkNone"> None</label>
+    </div>
+    <button onclick="displayOverallTop()">Show Top</button>
+    <div id="topOverallResults" class="keyBox" style="display:none;"><h2>Top Results</h2></div>
+</div>
 
     <script src="script.js"></script>
 </body>
