@@ -105,3 +105,22 @@ function displayOverallTop() {
     topBox.appendChild(list);
     topBox.style.display = 'block'; // Make the results box visible
 }
+// Function to copy the content of the top overall results to the clipboard
+function copyTopResults() {
+    const topResults = document.getElementById('topOverallResults');
+    const topResultsText = topResults.innerText;
+
+    // Copy text to clipboard
+    navigator.clipboard.writeText(topResultsText)
+        .then(() => {
+            // Success message
+            alert('Top results copied to clipboard!');
+        })
+        .catch(err => {
+            // Error message
+            console.error('Could not copy text: ', err);
+        });
+
+    // Open pop-up window with the link
+    window.open('https://mudae-tools.gustavbylund.se/split-list/', '_blank');
+}
