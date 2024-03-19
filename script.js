@@ -1,5 +1,5 @@
-// Initialize sortedData as an empty object if it's not already declared
-let sortedData = sortedData || {};
+// Initialize sortedData as an empty object
+let sortedData = {};
 
 function sortData() {
     const rawData = document.getElementById('dataInput').value;
@@ -85,20 +85,17 @@ function displayOverallTop() {
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    // Create a new box to display top results
-    const topOverallBox = document.createElement('div');
-    topOverallBox.className = 'keyBox';
-    topOverallBox.innerHTML = '<h2>Top Results</h2>';
-    
+    const topBox = document.createElement('div'); // Create a new div for the top overall results
+    topBox.id = 'topOverallResults'; // Set the id of the new div
+    topBox.className = 'keyBox'; // Apply the class for styling
+    document.body.appendChild(topBox); // Append the new div to the body
+
     const list = document.createElement('ul');
     allEntries.slice(0, number).forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry.text;
         list.appendChild(listItem);
     });
-    topOverallBox.appendChild(list);
-
-    // Append the new box to the document body
-    document.body.appendChild(topOverallBox);
+    topBox.appendChild(list);
+    topBox.style.display = 'block'; // Make the results box visible
 }
-
