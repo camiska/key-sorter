@@ -74,7 +74,7 @@ function displayOverallTop() {
         'Chaos': parseInt(document.getElementById('inputChaos').value),
         'Gold': parseInt(document.getElementById('inputGold').value),
         'Silver': parseInt(document.getElementById('inputSilver').value),
-        'Bronze': parseInt(document.getElementById('inputBronze').value)
+        'Bronze': parseInt(document.getElementById('inputBronze').value),
         'None': parseInt(document.getElementById('inputNone').value)
     };
 
