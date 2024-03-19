@@ -69,24 +69,27 @@ function displayOverallTop() {
 
     const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
-    const selectedCategories = categories.filter(cat => {
-        if (cat === 'None') {
-            return document.getElementById(`check${cat}`).checked;
-        } else {
-            return document.getElementById(`check${cat}`).checked && cat !== 'None';
-        }
-    });
+    const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
     const allEntries = [];
 
     selectedCategories.forEach(cat => {
-        const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
-        const entries = sortedData[key] || [];
-        entries.slice(0, number).forEach(entry => {
-            allEntries.push({
-                text: entry.full,
-                ka: entry.ka
+        if (cat === 'None') {
+            sortedData['noKey'].forEach(entry => {
+                allEntries.push({
+                    text: entry.full,
+                    ka: entry.ka
+                });
             });
-        });
+        } else {
+            const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
+            const entries = sortedData[key] || [];
+            entries.slice(0, number).forEach(entry => {
+                allEntries.push({
+                    text: entry.full,
+                    ka: entry.ka
+                });
+            });
+        }
     });
 
     allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
@@ -102,4 +105,3 @@ function displayOverallTop() {
     topBox.appendChild(list);
     topBox.style.display = 'block'; // Make the results box visible
 }
-
