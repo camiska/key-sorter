@@ -108,7 +108,17 @@ function displayOverallTop() {
 // Function to copy the content of the top overall results to the clipboard
 function copyTopResults() {
     const topResults = document.getElementById('topOverallResults');
-    const topResultsText = topResults.innerText;
+    const entries = topResults.getElementsByTagName('li');
+    let topResultsText = '';
+
+    // Iterate over each list item and append its text content with a newline character
+    for (let i = 0; i < entries.length; i++) {
+        topResultsText += entries[i].textContent;
+        // Add newline character after each entry, except for the last one
+        if (i < entries.length - 1) {
+            topResultsText += '\n';
+        }
+    }
 
     // Copy text to clipboard
     navigator.clipboard.writeText(topResultsText)
