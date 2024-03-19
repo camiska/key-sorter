@@ -16,9 +16,9 @@ function sortData() {
         const parts = line.split('·');
         if (parts.length > 1) {
             const name = parts[0].trim();
-            const details = parts[1].trim().split(' ');
-            const keyType = details[0];
-            const kaValue = parseInt(details[details.length - 2]);
+            const rest = parts[1].trim().split(' ');
+            const keyType = rest[0]; // like ':chaoskey:'
+            const kaValue = parseInt(rest[rest.length - 2]);
 
             if (sortedData.hasOwnProperty(keyType)) {
                 sortedData[keyType].push({ name, ka: kaValue, full: line.trim() });
@@ -33,19 +33,20 @@ function sortData() {
     });
 
     Object.keys(sortedData).forEach(key => {
-        sortedData[key].sort((a, b) => b.ka - a.ka);
-        // Remove colons from key to form the boxId
-        const boxId = key.replace(/:/g, '') + 'Box'; // Remove all colons from the key
+        const cleanKey = key.replace(/:/g, ''); // Remove colons
+        const boxId = `${cleanKey}Box`; // Form the ID
         const box = document.getElementById(boxId);
+
         if (box) {
-            box.innerHTML = ''; // Clear existing content
+            box.innerHTML = ''; // Clear previous entries
+            sortedData[key].sort((a, b) => b.ka - a.ka); // Sort the data
             sortedData[key].forEach(item => {
                 const p = document.createElement('p');
                 p.textContent = item.full;
                 box.appendChild(p);
             });
         } else {
-            console.error('Element not found:', boxId); // Log an error if the element is not found
+            console.error('Element not found:', boxId);
         }
     });
 }
