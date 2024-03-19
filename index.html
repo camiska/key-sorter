@@ -41,19 +41,28 @@ $mmwg-k-k=y+vs" rows="10" cols="50"></textarea>
     <div id="boxNone" class="keyBox"><h2>No Key</h2></div>
 
     <!-- Top Overall Tool -->
-    <div id="overallTool" style="margin-top: 20px;">
-        <h2>Top Overall</h2>
-        <input type="number" id="inputOverall" placeholder="Enter number XY">
-        <div>
-            <label><input type="checkbox" id="checkChaos"> Chaos</label>
-            <label><input type="checkbox" id="checkGold"> Gold</label>
-            <label><input type="checkbox" id="checkSilver"> Silver</label>
-            <label><input type="checkbox" id="checkBronze"> Bronze</label>
-            <label><input type="checkbox" id="checkNone"> None</label>
-        </div>
-        <button onclick="displayOverallTop()">Show Top</button>
-        <div id="topOverallResults" class="keyBox" style="display:none;"><h2>Top Results</h2></div>
+<div id="overallTool" style="margin-top: 20px;">
+    <h2>Top Overall</h2>
+    <input type="number" id="inputOverall" placeholder="Enter number XY">
+    <div>
+        <label><input type="checkbox" id="checkChaos"> Chaos</label>
+        <label><input type="number" id="inputChaos" placeholder="Enter number"></label>
+        <br>
+        <label><input type="checkbox" id="checkGold"> Gold</label>
+        <label><input type="number" id="inputGold" placeholder="Enter number"></label>
+        <br>
+        <label><input type="checkbox" id="checkSilver"> Silver</label>
+        <label><input type="number" id="inputSilver" placeholder="Enter number"></label>
+        <br>
+        <label><input type="checkbox" id="checkBronze"> Bronze</label>
+        <label><input type="number" id="inputBronze" placeholder="Enter number"></label>
+        <br>
+        <label><input type="checkbox" id="checkNone"> None</label>
     </div>
+    <button onclick="displayOverallTop()">Show Top</button>
+    <div id="topOverallResults" class="keyBox" style="display:none;"><h2>Top Results</h2></div>
+</div>
+
 
       <!-- Copy button for Top Results -->
     <div id="copyButtonDiv" style="margin-top: 20px;">
