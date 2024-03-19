@@ -4,10 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Sorter</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        .keyBox {
+            border: 2px solid white;
+            margin-top: 10px;
+            color: white;
+            background-color: #333;
+            padding: 10px;
+        }
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+        textarea, button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <textarea id="dataInput" placeholder="Enter your data here..."></textarea>
+    <textarea id="dataInput" placeholder="Enter your data here..." rows="10" cols="50"></textarea>
     <button onclick="sortData()">Sort Key Level</button>
     <div id="chaoskeyBox" class="keyBox"><h2>Chaos Key</h2></div>
     <div id="goldkeyBox" class="keyBox"><h2>Gold Key</h2></div>
