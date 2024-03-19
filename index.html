@@ -74,14 +74,6 @@ $mmwg-k-k=y+vs" rows="10" cols="50"></textarea>
             }
         });
 
-        function copyTopResults() {
-            const topResults = document.getElementById('topOverallResults').textContent;
-            navigator.clipboard.writeText(topResults).then(function() {
-                alert('Top results copied to clipboard!');
-            }, function(err) {
-                console.error('Failed to copy top results: ', err);
-            });
-        }
     </script>
 </body>
 </html>
