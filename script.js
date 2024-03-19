@@ -1,11 +1,5 @@
-// Declare sortedData outside of any function to make it globally accessible
-let sortedData = {
-    ':chaoskey:': [],
-    ':goldkey:': [],
-    ':silverkey:': [],
-    ':bronzekey:': [],
-    'noKey': []
-};
+// Initialize sortedData as an empty object
+let sortedData = {};
 
 function sortData() {
     const rawData = document.getElementById('dataInput').value;
@@ -67,6 +61,12 @@ function sortData() {
 }
 
 function displayOverallTop() {
+    // Ensure sortedData is initialized
+    if (Object.keys(sortedData).length === 0) {
+        console.error('sortedData is not initialized. Call sortData() first.');
+        return;
+    }
+
     const number = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
     const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
