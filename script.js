@@ -10,12 +10,21 @@ function sortData() {
         'noKey': []
     };
 
+    // Mapping of key types to new box IDs
+    const keyToBoxId = {
+        ':chaoskey:': 'boxChaos',
+        ':goldkey:': 'boxGold',
+        ':silverkey:': 'boxSilver',
+        ':bronzekey:': 'boxBronze',
+        'noKey': 'boxNone'
+    };
+
     lines.forEach(line => {
         const parts = line.split('·');
         if (parts.length > 1) {
             const name = parts[0].trim();
             const details = parts[1].trim().split(' ');
-            const keyType = details[0]; // such as ':chaoskey:'
+            const keyType = details[0];
             const kaValue = parseInt(details[details.length - 2]);
 
             if (sortedData.hasOwnProperty(keyType)) {
@@ -32,11 +41,10 @@ function sortData() {
 
     Object.keys(sortedData).forEach(key => {
         sortedData[key].sort((a, b) => b.ka - a.ka);
-        // The replacement here is adjusted to ensure all colons are removed.
-        const boxId = key.replace(/:/g, '') + 'Box'; // This ensures all colons are removed
+        const boxId = keyToBoxId[key]; // Use the new mapping to get the correct box ID
         const box = document.getElementById(boxId);
-        if (box) {
-            box.innerHTML = ''; // Make sure this is the only line within this condition.
+        if (box !== null) {
+            box.innerHTML = '';
             sortedData[key].forEach(item => {
                 const p = document.createElement('p');
                 p.textContent = item.full;
