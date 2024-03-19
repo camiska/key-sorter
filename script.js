@@ -1,5 +1,7 @@
 function sortData() {
-    // Get the raw data from the textarea
+    console.log("Function called"); // Check if function is called
+    const rawData = document.getElementById('dataInput').value;
+    console.log(rawData); // Check if data is being read correctly
     const rawData = document.getElementById('dataInput').value;
     // Split the raw data into lines
     const lines = rawData.split('\n');
