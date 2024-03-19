@@ -55,7 +55,7 @@ $mmwg-k-k=y=y+vs" rows="10" cols="50"></textarea>
         <div id="topOverallResults" class="keyBox" style="display:none;"><h2>Top Results</h2></div>
     </div>
 
-    <!-- Copy button for Top Results -->
+      <!-- Copy button for Top Results -->
     <div id="copyButtonDiv" style="margin-top: 20px;">
         <button onclick="copyTopResults()">Copy Top Results</button>
     </div>
@@ -72,6 +72,15 @@ $mmwg-k-k=y=y+vs" rows="10" cols="50"></textarea>
                 dataInput.placeholder = '';
             }
         });
+
+        function copyTopResults() {
+            const topResults = document.getElementById('topOverallResults').textContent;
+            navigator.clipboard.writeText(topResults).then(function() {
+                alert('Top results copied to clipboard!');
+            }, function(err) {
+                console.error('Failed to copy top results: ', err);
+            });
+        }
     </script>
 </body>
 </html>
