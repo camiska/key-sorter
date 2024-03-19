@@ -113,11 +113,7 @@ function copyTopResults() {
 
     // Iterate over each list item and append its text content with a newline character
     for (let i = 0; i < entries.length; i++) {
-        topResultsText += entries[i].textContent;
-        // Add newline character after each entry, except for the last one
-        if (i < entries.length - 1) {
-            topResultsText += '\n';
-        }
+        topResultsText += entries[i].textContent + '\n';
     }
 
     // Copy text to clipboard
