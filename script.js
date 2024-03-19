@@ -67,68 +67,55 @@ function displayOverallTop() {
         return;
     }
 
-    const overallNumber = document.getElementById('inputOverall').value;
+    const numberOverall = document.getElementById('inputOverall').value;
     const categories = ['Chaos', 'Gold', 'Silver', 'Bronze', 'None'];
     const selectedCategories = categories.filter(cat => document.getElementById(`check${cat}`).checked);
-
-    const categoryNumbers = {};
-    selectedCategories.forEach(cat => {
-        const inputElement = document.getElementById(`input${cat}`);
-        const inputValue = inputElement ? inputElement.value : '';
-        categoryNumbers[cat] = parseInt(inputValue) || 0;
-    });
+    const categoryValues = {
+        'Chaos': parseInt(document.getElementById('inputChaos').value),
+        'Gold': parseInt(document.getElementById('inputGold').value),
+        'Silver': parseInt(document.getElementById('inputSilver').value),
+        'Bronze': parseInt(document.getElementById('inputBronze').value)
+    };
 
     const allEntries = [];
-    const selectedEntries = [];
-    let remainingOverallNumber = overallNumber;
 
-    // Gather entries for each category
     selectedCategories.forEach(cat => {
-        if (cat === 'None') {
-            sortedData['noKey'].forEach(entry => {
+        const num = categoryValues[cat];
+        if (isNaN(num) || num <= 0) {
+            // If no value specified or invalid value, consider all entries for this category
+            const key = `:${cat.toLowerCase()}key:`; 
+            const entries = sortedData[key] || [];
+            entries.forEach(entry => {
                 allEntries.push({
                     text: entry.full,
                     ka: entry.ka
                 });
             });
         } else {
-            const key = `:${cat.toLowerCase()}key:`; // This matches the key format in sortedData
+            // If a value is specified, select the top entries for this category
+            const key = `:${cat.toLowerCase()}key:`; 
             const entries = sortedData[key] || [];
-
-            // Sort entries in descending order of ka value
-            entries.sort((a, b) => b.ka - a.ka);
-
-            // Determine the number of entries to select for this category
-            const categoryNumber = categoryNumbers[cat];
-            const selectedCategoryEntries = categoryNumber > 0 ? entries.slice(0, categoryNumber) : entries;
-
-            // Add selected category entries to the overall selected entries
-            selectedEntries.push(...selectedCategoryEntries);
-            remainingOverallNumber -= selectedCategoryEntries.length;
+            entries.slice(0, num).forEach(entry => {
+                allEntries.push({
+                    text: entry.full,
+                    ka: entry.ka
+                });
+            });
         }
     });
 
-    // Sort all selected entries by ka value
-    selectedEntries.sort((a, b) => b.ka - a.ka);
+    allEntries.sort((a, b) => b.ka - a.ka); // Sort all collected entries by ka value
 
-    // Add remaining top entries from other categories if any
-    for (let i = 0; i < allEntries.length && remainingOverallNumber > 0; i++) {
-        if (!selectedEntries.includes(allEntries[i])) {
-            selectedEntries.push(allEntries[i]);
-            remainingOverallNumber--;
-        }
-    }
-
-    const topBox = document.getElementById('topOverallResults');
-    topBox.innerHTML = '';
+    const topBox = document.getElementById('topOverallResults'); 
+    topBox.innerHTML = ''; 
     const list = document.createElement('ul');
-    selectedEntries.slice(0, overallNumber).forEach(entry => {
+    allEntries.slice(0, numberOverall).forEach(entry => {
         const listItem = document.createElement('li');
         listItem.textContent = entry.text;
         list.appendChild(listItem);
     });
     topBox.appendChild(list);
-    topBox.style.display = 'block';
+    topBox.style.display = 'block'; // Make the results box visible
 }
 
 // Function to copy the content of the top overall results to the clipboard
