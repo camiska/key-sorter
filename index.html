@@ -17,20 +17,59 @@
             color: white;
             font-family: Arial, sans-serif;
         }
-        textarea, button {
+        textarea, button, input {
             margin-top: 10px;
+        }
+        #overallTool label {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <textarea id="dataInput" placeholder="Enter your data here..." rows="10" cols="50"></textarea>
     <button onclick="sortData()">Sort Key Level</button>
-    <div id="boxChaos" class="keyBox"><h2>Chaos Key</h2></div>
-    <div id="boxGold" class="keyBox"><h2>Gold Key</h2></div>
-    <div id="boxSilver" class="keyBox"><h2>Silver Key</h2></div>
-    <div id="boxBronze" class="keyBox"><h2>Bronze Key</h2></div>
-    <div id="boxNone" class="keyBox"><h2>No Key</h2></div>
-
+    <div id="boxChaos" class="keyBox">
+        <h2>Chaos Key</h2>
+        <input type="number" id="inputChaos" placeholder="Enter number">
+        <button onclick="displayTop('Chaos')">Show Top</button>
+        <div id="topChaos"></div>
+    </div>
+    <div id="boxGold" class="keyBox">
+        <h2>Gold Key</h2>
+        <input type="number" id="inputGold" placeholder="Enter number">
+        <button onclick="displayTop('Gold')">Show Top</button>
+        <div id="topGold"></div>
+    </div>
+    <div id="boxSilver" class="keyBox">
+        <h2>Silver Key</h2>
+        <input type="number" id="inputSilver" placeholder="Enter number">
+        <button onclick="displayTop('Silver')">Show Top</button>
+        <div id="topSilver"></div>
+    </div>
+    <div id="boxBronze" class="keyBox">
+        <h2>Bronze Key</h2>
+        <input type="number" id="inputBronze" placeholder="Enter number">
+        <button onclick="displayTop('Bronze')">Show Top</button>
+        <div id="topBronze"></div>
+    </div>
+    <div id="boxNone" class="keyBox">
+        <h2>No Key</h2>
+        <input type="number" id="inputNone" placeholder="Enter number">
+        <button onclick="displayTop('None')">Show Top</button>
+        <div id="topNone"></div>
+    </div>
+    <!-- Top Overall Tool -->
+    <div id="overallTool">
+        <h2>Top Overall</h2>
+        <input type="number" id="inputOverall" placeholder="Enter number">
+        <label><input type="checkbox" id="checkChaos"> Chaos</label>
+        <label><input type="checkbox" id="checkGold"> Gold</label>
+        <label><input type="checkbox" id="checkSilver"> Silver</label>
+        <label><input type="checkbox" id="checkBronze"> Bronze</label>
+        <label><input type="checkbox" id="checkNone"> None</label>
+        <button onclick="displayOverallTop()">Show Top</button>
+        <div id="topOverall"></div>
+    </div>
 
     <script src="script.js"></script>
 </body>
